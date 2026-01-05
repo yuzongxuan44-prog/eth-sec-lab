@@ -1,0 +1,40 @@
+# Node modules
+/node_modules
+
+# Compilation output
+/dist
+
+# pnpm deploy output
+/bundle
+
+# Hardhat Build Artifacts
+/artifacts
+
+# Hardhat compilation (v2) support directory
+/cache
+
+# Typechain output
+/types
+
+# Hardhat coverage reports
+/coverage
+
+# dependencies
+node_modules/
+
+# env (敏感)
+.env
+.env.*
+
+# python venv
+.venv/
+
+# hardhat build outputs
+cache/
+artifacts/
+typechain-types/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
