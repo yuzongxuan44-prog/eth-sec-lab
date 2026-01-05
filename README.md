@@ -1,57 +1,40 @@
-# Sample Hardhat 3 Beta Project (`node:test` and `viem`)
+# 网络安全与系统设计课程设计：以太坊智能合约安全评估与攻防验证实验（eth-sec-lab）
 
-This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
+本仓库为《网络安全与系统设计》课程设计配套代码与实验结果归档，围绕“评估 → 验证 → 加固 → 回归”的流程，对以太坊智能合约中的典型漏洞与攻击方式进行复现，并给出对应防御措施与回归验证证据。
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+项目重点不是做大而全的区块链系统，而是用一套相对可复现、证据化的方式，把常见风险点讲清楚、复现出来、修复后再验证。
 
-## Project Overview
+---
 
-This example project includes:
+## 1. 项目结构
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+- `contracts/`  
+  合约源码：包含带漏洞版本、攻击相关合约，以及修复/防御版本（CEI、重入锁、权限控制等）。
+- `test/`  
+  Hardhat 测试用例：包含 4 类攻击实验与回归测试脚本（可一键运行）。
+- `scripts/`  
+  辅助脚本（如部署、发送操作等）。
+- `reports/audit/`  
+  实验输出证据归档：各攻击实验日志、Mythril 输出、回归对比结果等。
+- `hardhat.config.ts` / `package.json` / `package-lock.json` / `tsconfig.json`  
+  项目配置与依赖锁定文件。
 
-## Usage
+---
 
-### Running Tests
+## 2. 环境与依赖
 
-To run all the tests in the project, execute the following command:
+### 2.1 基础环境
+- Node.js：建议 18+（或使用你本机已验证可运行的版本）
+- npm：随 Node 自带
 
-```shell
-npx hardhat test
-```
+### 2.2 说明
+- 本仓库默认在本地链（Hardhat Network / Ganache 风格）运行，不依赖真实主网。
+- `.env` 不建议上传仓库（涉及敏感变量）。如需要，可自行创建 `.env.example` 作为模板。
 
-You can also selectively run the Solidity or `node:test` tests:
+---
 
-```shell
-npx hardhat test solidity
-npx hardhat test nodejs
-```
+## 3. 快速开始（推荐）
 
-### Make a deployment to Sepolia
-
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
-
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
-
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
+### 3.1 安装依赖
+```bash
+npm ci
